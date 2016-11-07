@@ -410,8 +410,8 @@ static void HPGestureRecognizerCancel(UIGestureRecognizer *gestureRecognizer)
 {
     const CGPoint location  = [gesture locationInView:self];
     NSIndexPath *toIndexPath = [self indexPathForRowAtPoint:location];
-    
-    if ([self.delegate respondsToSelector:@selector(tableView:targetIndexPathForMoveFromRowAtIndexPath:toProposedIndexPath:)])
+
+    if ([self.delegate respondsToSelector:@selector(tableView:targetIndexPathForMoveFromRowAtIndexPath:toProposedIndexPath:)] && toIndexPath != nil)
     {
         toIndexPath = [self.delegate tableView:self targetIndexPathForMoveFromRowAtIndexPath:_reorderInitialIndexPath toProposedIndexPath:toIndexPath];
     }

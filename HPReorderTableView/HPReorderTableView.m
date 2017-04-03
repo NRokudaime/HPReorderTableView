@@ -299,8 +299,6 @@ static void HPGestureRecognizerCancel(UIGestureRecognizer *gestureRecognizer)
          return;
      }
      
-     [self beginUpdates];
-     [self endUpdates];
      if ([self visibleCells].count == 0) {
          return;
      }
@@ -314,7 +312,13 @@ static void HPGestureRecognizerCancel(UIGestureRecognizer *gestureRecognizer)
      if (_realDataSource == nil || self.delegate == nil) {
          return;
      }
-     [self endUpdates];
+     
+     @try {
+         [self endUpdates];
+     } @catch (NSException *exception) {
+         NSLog(@"%@", exception.description);
+     }
+     
  }
 
 

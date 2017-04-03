@@ -294,16 +294,25 @@ static void HPGestureRecognizerCancel(UIGestureRecognizer *gestureRecognizer)
 }
 
 - (void)reorderCurrentRowToIndexPath:(NSIndexPath*)toIndexPath
-{
-    [self beginUpdates];
-    [self moveRowAtIndexPath:toIndexPath toIndexPath:_reorderCurrentIndexPath]; // Order is important to keep the empty cell behind
-    if ([self.dataSource respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:)])
-    {
-        [self.dataSource tableView:self moveRowAtIndexPath:_reorderCurrentIndexPath toIndexPath:toIndexPath];
-    }
-    _reorderCurrentIndexPath = toIndexPath;
-    [self endUpdates];
-}
+ {
+     if (_realDataSource == nil || self.delegate == nil) {
+         return;
+     }
+     
+     [self beginUpdates];
+     [self moveRowAtIndexPath:toIndexPath toIndexPath:_reorderCurrentIndexPath]; // Order is important to keep the empty cell behind
+     if ([self.dataSource respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:)])
+     {
+         [self.dataSource tableView:self moveRowAtIndexPath:_reorderCurrentIndexPath toIndexPath:toIndexPath];
+     }
+     _reorderCurrentIndexPath = toIndexPath;
+     if (_realDataSource == nil || self.delegate == nil) {
+         return;
+     }
+     [self endUpdates];
+ }
+
+
 
 #pragma mark Subclassing
 

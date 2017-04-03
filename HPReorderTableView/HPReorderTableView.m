@@ -313,11 +313,13 @@ static void HPGestureRecognizerCancel(UIGestureRecognizer *gestureRecognizer)
          return;
      }
      
-     @try {
+     UIView *superview = [self superview];
+     if ([[UIApplication sharedApplication].keyWindow.rootViewController.view isEqual: superview]) {
          [self endUpdates];
-     } @catch (NSException *exception) {
-         NSLog(@"%@", exception.description);
+     } else {
+         return;
      }
+
      
  }
 

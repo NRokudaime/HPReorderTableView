@@ -299,7 +299,8 @@ static void HPGestureRecognizerCancel(UIGestureRecognizer *gestureRecognizer)
          return;
      }
      
-     [self reloadData];
+     [self beginUpdates];
+     [self endUpdates];
      if ([self visibleCells].count == 0) {
          return;
      }
